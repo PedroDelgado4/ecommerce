@@ -1,8 +1,13 @@
+<script setup>
+import Navbar from './components/Navbar.vue';
+</script>
+
+
 <template>
-  <nav class="p-4 bg-gray-800 text-white flex gap-4">
-    <router-link to="/" class="hover:text-blue-400">Tienda</router-link>
-    <router-link to="/carrito" class="hover:text-blue-400">Carrito</router-link>
-  </nav>
-  
-  <router-view />
+  <div class="min-h-screen bg-gray-50">
+    <Navbar />
+    <main>
+      <router-view />
+    </main>
+  </div>
 </template>
