@@ -1,9 +1,12 @@
 import { defineStore } from "pinia"
-import {ref, computed} from "vue"
+import {ref, computed, watch} from "vue"
 
 export const useCartStore = defineStore("cart", () => {
     // 1. STATE: los datos
-    const items = ref([])
+    // Intentamos cargar datos previos del carrito
+    const savedCart = localStorage.getItem("cart")
+    // Si hay datos, los pasamos de JSON a Array, si no, un array vacio
+    const items = ref(savedCart ? JSON.parse(savedCart) : [])
 
     // 2. GETTERS: Datos derivados
     // Calculo de total de productos y precio automaticamente
@@ -18,6 +21,12 @@ export const useCartStore = defineStore("cart", () => {
     function removeFromCart(productId){
         items.value = items.value.filter(product => product.id !== productId)
     }
+
+    // 3. WATCHER: Vigilamos el array 'items'
+    // Cada vez que cambie, lo guardamos en localStorage convertido a texto (JSON)
+    watch(items, (newItems) => {
+        localStorage.setItem("cart", JSON.stringify(newItems))
+    }, { deep: true }) // 'deep: true' es vital para vigilar cambios DENTRO del array
 
     return {
         items,
