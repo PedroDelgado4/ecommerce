@@ -1,4 +1,5 @@
 <script setup>
+import FloatingProfileButton from './components/FloatingProfileButton.vue';
 import Navbar from './components/Navbar.vue';
 </script>
 
@@ -9,5 +10,6 @@ import Navbar from './components/Navbar.vue';
     <main>
       <router-view />
     </main>
+    <FloatingProfileButton/>
   </div>
 </template>
