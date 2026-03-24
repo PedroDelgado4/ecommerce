@@ -1,6 +1,9 @@
 <script setup>
+import { ref } from 'vue';
 import { useCartStore } from '../stores/cart';
+import CartDrawer from './CartDrawer.vue'
 const cart = useCartStore();
+const isDrawerOpen = ref(false); //Estado para el drawer
 </script>
 
 <template>
@@ -16,17 +19,18 @@ const cart = useCartStore();
             Tienda
           </router-link>
 
-          <router-link to="/carrito" class="relative group p-2 bg-stone-100 rounded-xl hover:bg-emerald-50 transition-all">
+          <button 
+            @click="isDrawerOpen = true" 
+            class="relative group p-2 bg-stone-100 rounded-xl hover:bg-emerald-50 transition-all"
+          >
             <span class="text-xl">🛒</span>
-            <span 
-              v-if="cart.totalItems > 0"
-              class="absolute -top-1 -right-1 bg-emerald-600 text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white animate-bounce"
-            >
+            <span v-if="cart.totalItems > 0" class="absolute -top-1 -right-1 bg-emerald-600 text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white animate-bounce">
               {{ cart.totalItems }}
             </span>
-          </router-link>
+          </button>
         </div>
       </div>
     </div>
   </nav>
+  <CartDrawer :isOpen="isDrawerOpen" @close="isDrawerOpen = false" />
 </template>
